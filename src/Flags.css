@@ -1,0 +1,23 @@
+.container{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card{
+    margin: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid black;
+    text-align: center;
+    height: 140px;
+    width: 140px;
+    font-weight: bold;
+    
+}
+
+.card img {
+    height: 70px;
+    width: 70px;
+}
+
