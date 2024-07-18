@@ -1,50 +1,53 @@
-import React, {useState, useEffect} from "react";
-import './Flags.css'
-
+import React, { useState, useEffect } from "react";
+import './Flags.css';
 
 const Flags = () => {
-    const[countries, setcountries] = useState([]);
-    const[error, setError] = useState(true);
+  const [countries, setCountries] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [error, setError] = useState(false);
 
-    
-
-    useEffect(()=> {
-        const getApidata = async() => {
-            try{
-                const result = await fetch ("https://xcountries-backend.azurewebsites.net/all");
-                if(!result.ok) {
-                throw new error(`HTTP error! status: ${result.status}`);
-                
-                }
-                const data = await result.json();
-                setcountries(data);
-    
-          } catch(error){
-            console.error("Error fetching data: ", error);
-            setError(error)
-          }
+  useEffect(() => {
+    const getApiData = async () => {
+      try {
+        const result = await fetch("https://xcountries-backend.azurewebsites.net/all");
+        if (!result.ok) {
+          throw new Error(`HTTP error! status: ${result.status}`);
         }
-        getApidata()
-    },[])
+        const data = await result.json();
+        setCountries(data);
+        setError(false);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+        setError(true);
+      }
+    };
+    getApiData();
+  }, []);
 
-
-    return(
-       
-        <div className="container">
-            
-            {countries.map((countries) => {
-                return(
-                    <div className="card" >
-                        <img src={countries.flag} alt={`flag of ${countries.name}`}/>
-                        <p>{countries.name}</p>
-                    </div>
-                )
-
-            })}
-            
-
+  return (
+    <div className="container">
+      <input
+        type="text"
+        placeholder="Search for countries..."
+        value={searchTerm}
+        onChange={(event) => setSearchTerm(event.target.value)}
+      />
+      {error ? (
+        <p>Error fetching data</p>
+      ) : (
+        <div className="cards-container">
+          {countries
+            .filter((country) => country.name.toLowerCase().includes(searchTerm.toLowerCase()))
+            .map((country) => (
+              <div className="card" key={country.alpha3Code}>
+                <img src={country.flag} alt={`flag of ${country.name}`} />
+                <p>{country.name}</p>
+              </div>
+            ))}
         </div>
-      
-    )
-}
+      )}
+    </div>
+  );
+};
+
 export default Flags;
