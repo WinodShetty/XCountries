@@ -24,6 +24,10 @@ const Flags = () => {
     getApiData();
   }, []);
 
+  const filteredCountries = countries.filter((country) =>
+    country.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="container">
       <input
@@ -36,14 +40,16 @@ const Flags = () => {
         <p>Error fetching data</p>
       ) : (
         <div className="cards-container">
-          {countries
-            .filter((country) => country.name.toLowerCase().includes(searchTerm.toLowerCase()))
-            .map((country) => (
+          {filteredCountries.length > 0 ? (
+            filteredCountries.map((country) => (
               <div className="card" key={country.alpha3Code}>
                 <img src={country.flag} alt={`flag of ${country.name}`} />
                 <p>{country.name}</p>
               </div>
-            ))}
+            ))
+          ) : (
+            <p>No results found</p>
+          )}
         </div>
       )}
     </div>
