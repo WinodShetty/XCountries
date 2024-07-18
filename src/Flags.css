@@ -21,7 +21,7 @@ input[type="text"] {
   justify-content: center;
 }
 
-.card {
+.countryCard {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,17 +35,17 @@ input[type="text"] {
   transition: transform 0.2s;
 }
 
-.card:hover {
+.countryCard:hover {
   transform: scale(1.05);
 }
 
-.card img {
+.countryCard img {
   width: 100px;
   height: auto;
   margin-bottom: 10px;
 }
 
-.card p {
+.countryCard p {
   font-size: 14px;
   font-weight: bold;
 }

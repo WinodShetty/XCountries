@@ -9,7 +9,7 @@ const Flags = () => {
   useEffect(() => {
     const getApiData = async () => {
       try {
-        const result = await fetch("https://xcountries-backend.azurewebsites.net/all");
+        const result = await fetch("https://restcountries.com/v3.1/all");
         if (!result.ok) {
           throw new Error(`HTTP error! status: ${result.status}`);
         }
@@ -25,7 +25,7 @@ const Flags = () => {
   }, []);
 
   const filteredCountries = countries.filter((country) =>
-    country.name.toLowerCase().includes(searchTerm.toLowerCase())
+    country.name.common.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -42,9 +42,9 @@ const Flags = () => {
         <div className="cards-container">
           {filteredCountries.length > 0 ? (
             filteredCountries.map((country) => (
-              <div className="card" key={country.alpha3Code}>
-                <img src={country.flag} alt={`flag of ${country.name}`} />
-                <p>{country.name}</p>
+              <div className="countryCard" key={country.cca3}>
+                <img src={country.flags.svg} alt={`flag of ${country.name.common}`} />
+                <p>{country.name.common}</p>
               </div>
             ))
           ) : (
